@@ -45,6 +45,30 @@ const data = [
   },
 ];
 
-//Use DOM element references
-
+//Use DOM elements as references
 const productsContainer = document.querySelector(".products");
+const searchInput = document.querySelector(".search");
+const categoriesInput = document.querySelector(".cats");
+const priceRange = document.querySelector(".priceRange");
+const priceValue = document.querySelector(".priceValue");
+
+//function to display product
+// Parameter filterproducts = the mapped array of the items going into class "products"
+const displayProducts = (filterProducts) => {
+  productsContainer.innerHTML = filterProducts
+    .map(
+      (product) =>
+        // pre-created HTML as template literals
+        // accessing properties from data object through dot notation
+        `
+        <div class="product">
+            <img src=${product.img} alt=""/>
+            <span class="name">${product.name}</span>
+            <span class="priceText">${product.price}</span>
+        </div>
+        `
+    )
+    .join("");
+};
+
+displayProducts(data);
