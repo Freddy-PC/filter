@@ -45,10 +45,10 @@ const data = [
   },
 ];
 
-//Use DOM elements as references
+//1 Use DOM elements as references
 const productsContainer = document.querySelector(".products");
 const searchInput = document.querySelector(".search");
-const categoriesInput = document.querySelector(".cats");
+const categoriesContainer = document.querySelector(".cats");
 const priceRange = document.querySelector(".priceRange");
 const priceValue = document.querySelector(".priceValue");
 
@@ -95,3 +95,39 @@ searchInput.addEventListener("keyup", (e) => {
     displayProducts(data);
   }
 });
+
+//2 display categories as clickable <span> tags
+// function that displays all categories
+// categories array
+const setCategories = () => {
+  const allCats = data.map((item) => item.cat);
+  const categories = [
+    "All", // displays all products
+    ...allCats,
+    filter((item, i) => {
+      // ...allCats === all arrays
+      // returns the first category that appears
+      return allCats.indexOf(item) === i;
+    }),
+  ];
+
+  categoriesContainer.innerHTML = categories
+    .map(
+      (cat) =>
+        `
+        <span class="cat">$${cat}</span>
+       `
+    )
+    .join("");
+  // Event listner for category filtering
+  categoriesContainer.addEventListener("click", (e) => {
+    const selectedCat = e.target.textContent;
+    if (selectedCat === "All") {
+      displayProducts(data);
+    } else {
+      displayProducts(data.filter((item) => item.cat === selectedCat));
+    }
+  });
+};
+
+setCategories();
