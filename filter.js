@@ -52,13 +52,13 @@ const categoriesInput = document.querySelector(".cats");
 const priceRange = document.querySelector(".priceRange");
 const priceValue = document.querySelector(".priceValue");
 
-//function to display product
+//function to display products
 // Parameter filterproducts = the mapped array of the items going into class "products"
 const displayProducts = (filterProducts) => {
   productsContainer.innerHTML = filterProducts
     .map(
       (product) =>
-        // pre-created HTML as template literals
+        // pre-created HTML as template literals within "products" class
         // accessing properties from data object through dot notation
         `
         <div class="product">
@@ -72,3 +72,26 @@ const displayProducts = (filterProducts) => {
 };
 
 displayProducts(data);
+
+/* add event listener for the search input 
+   to filter the products based on user input */
+// Listens to key presses and passes a helper function
+// Made in a non-case sensitive way
+// The parameter = e
+
+// If there is a value present from user key input...
+// Use the helper function, filter the array based on the "value" === event === user input in search
+// toLocaleLowerCase() sets the name values in the data array about all lower case
+// toLocaleLowerCase() on search + toLowerCase() on e = searching for same value in LOWERCASE
+// -1 === not a string ; !== -1 (means there isn't a string) ; anything above -1 means it's true
+// get index value of search input (value) AND if it is not equal to -1 (not a string) return the displayProducts...
+searchInput.addEventListener("keyup", (e) => {
+  const value = e.target.value.toLowerCase();
+  if (value) {
+    displayProducts(
+      data.filter((item) => item.name.toLocaleLowerCase().indexOf(value) !== -1)
+    );
+  } else {
+    displayProducts(data);
+  }
+});
