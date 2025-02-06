@@ -45,14 +45,14 @@ const data = [
   },
 ];
 
-//1 Use DOM elements as references
+//0 Use DOM elements as references
 const productsContainer = document.querySelector(".products");
 const searchInput = document.querySelector(".search");
 const categoriesContainer = document.querySelector(".cats");
 const priceRange = document.querySelector(".priceRange");
 const priceValue = document.querySelector(".priceValue");
 
-//function to display products
+//1 function to display products
 // Parameter filterproducts = the mapped array of the items going into class "products"
 const displayProducts = (filterProducts) => {
   productsContainer.innerHTML = filterProducts
@@ -97,14 +97,14 @@ searchInput.addEventListener("keyup", (e) => {
 });
 
 //2 display categories as clickable <span> tags
+// if they click on one category, it will display products in that cat.
 // function that displays all categories
 // categories array
 const setCategories = () => {
   const allCats = data.map((item) => item.cat);
   const categories = [
     "All", // displays all products
-    ...allCats,
-    filter((item, i) => {
+    ...allCats.filter((item, i) => {
       // ...allCats === all arrays
       // returns the first category that appears
       return allCats.indexOf(item) === i;
@@ -115,8 +115,8 @@ const setCategories = () => {
     .map(
       (cat) =>
         `
-        <span class="cat">$${cat}</span>
-       `
+        <span class="cat">${cat}</span>
+        `
     )
     .join("");
   // Event listner for category filtering
