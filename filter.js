@@ -60,11 +60,12 @@ const displayProducts = (filterProducts) => {
       (product) =>
         // pre-created HTML as template literals within "products" class
         // accessing properties from data object through dot notation
+        // add $ for price
         `
         <div class="product">
             <img src=${product.img} alt=""/>
             <span class="name">${product.name}</span>
-            <span class="priceText">${product.price}</span>
+            <span class="priceText">$${product.price}</span>
         </div>
         `
     )
@@ -131,3 +132,28 @@ const setCategories = () => {
 };
 
 setCategories();
+
+// Create function to set up price filter
+const setPrices = () => {
+  //extract price values from data object into a array copy
+  const priceList = data.map((item) => item.price);
+  // Getting the min/max price from ((all array values??))
+  const minPrice = Math.min(...priceList);
+  const maxPrice = Math.max(...priceList);
+  // Configure the HTML element and set it equal to the min/max price value
+  priceRange.min = minPrice;
+  priceRange.max = maxPrice;
+  priceRange.value = maxPrice; // The current value will NOT render prices above this "max value"
+  // Configure the LOGIC to HTML element to dynamically change the price to "maxPrice" = slider
+  priceValue.textContent = "$" + maxPrice;
+  // add event listener to filter products based on price range
+  priceRange.addEventListener("input", (e) => {
+    // the HTML element = (the user input from slider = maxPrice)
+    priceValue.textContent = "$" + e.target.value;
+    // Need to display products and filter by the price
+    // If the product price is less than or equal to the (user input = slider)
+    displayProducts(data.filter((item) => item.price <= e.target.value));
+  });
+};
+
+setPrices();
